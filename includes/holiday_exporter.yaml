@@ -1,0 +1,9 @@
+---
+main:
+ port: 9110
+
+holidays:
+  - country: "CA"
+    province: "ON"
+  - country: "US"
+    state: "CA"
