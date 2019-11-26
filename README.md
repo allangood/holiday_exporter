@@ -38,11 +38,11 @@ Then configure Prometheus to scrape your server:
 ```
 
 Metrics exposed:
-|   Metric            |     Possible Values    |
-| ------------------- | ---------------------- |
-| is_holiday          | 1 => True / 0 => false |
-| ------------------- | ---------------------- |
-| is_daylight_saving  | 1 => True / 0 => false |
+
+|       Metric       |        Possible Values       |
+|:------------------:|:----------------------------:|
+|     is_holiday     | 1 =&gt; True / 0 =&gt; False |
+| is_daylight_saving | 1 =&gt; True / 0 =&gt; False |
 
 
 # Alternatives
