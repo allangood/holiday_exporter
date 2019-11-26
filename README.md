@@ -1,5 +1,6 @@
 # holiday_exporter
 A simple python exporter that exports holidays to Prometheus to help with Alerting.
+This exporter uses the awesome [python-holidays library](https://pypi.org/project/holidays/)
 
 # The Prooblem
 I want to fire some alerts on workdays only, but Prometheus/Alertmanager doesnt support it!
@@ -22,6 +23,19 @@ docker build -t holiday_exporter .
 docker run -d -p 9110:9110 --name holiday holiday_exporter
 ```
 Or you can specify your own configuration file:
+Create your YAML file:
+```
+main:
+ port: 9110
+
+# Countries, states and provinces accordingly to https://pypi.org/project/holidays
+holidays:
+  - country: "CA"
+    province: "ON"
+  - country: "US"
+    state: "CA"
+```
+Then use with your container:
 ```
 docker run -d -p 9110:9110 -v my_config_file.yaml:/etc/holiday_exporter.yaml --name holiday holiday_exporter
 ```
@@ -44,6 +58,16 @@ Metrics exposed:
 |     is_holiday     | 1 =&gt; True / 0 =&gt; False |
 | is_daylight_saving | 1 =&gt; True / 0 =&gt; False |
 
+# Sample
+```
+# HELP is_holiday Boolean value if today is a statutory holiday
+# TYPE is_holiday gauge
+is_holiday{country="CA",province="ON",state="None"} 0.0
+is_holiday{country="US",province="None",state="CA"} 0.0
+# HELP is_daylightsavings Boolean value if today is local daylight saving time
+# TYPE is_daylightsavings gauge
+is_daylight_savings 0.0
+```
 
 # Alternatives
 [This is another solution](https://github.com/OneMainF/time-range-exporter)
