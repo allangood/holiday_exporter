@@ -9,10 +9,10 @@ I want to fire some alerts on workdays only, but Prometheus/Alertmanager doesnt 
 # Solution #1
 Create a recording rule on Prometheus with all holidays.
 This can be really complicated with non fixed holidays, like Easter.
-[Like this sugestion](https://gist.github.com/roidelapluie/8c67e9c8fb18b310a4a90cb92a23056b)
+[Implementation sugestion](https://gist.github.com/roidelapluie/8c67e9c8fb18b310a4a90cb92a23056b)
 
 # Solution #2
-Use this exporter and include it inside your expression!
+Use this exporter and include it in your expression!
 
 # How to run:
 ```
@@ -37,12 +37,12 @@ holidays:
 ```
 Then use with your container:
 ```
-docker run -d -p 9110:9110 -v my_config_file.yaml:/etc/holiday_exporter.yaml --name holiday holiday_exporter
+docker run -d -p 9110:9110 -v my_config_file.yaml:/etc/holiday_exporter.yaml --restart unless-stopped --name holiday_exporter holiday_exporter
 ```
 
 Then configure Prometheus to scrape your server:
 ```
-- job_name: is_holiday
+- job_name: holiday_exporter
   scrape_interval: 10s
   scrape_timeout: 5s
   metrics_path: "/"
