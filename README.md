@@ -2,7 +2,7 @@
 A simple python exporter that exports holidays to Prometheus to help with Alerting.
 This exporter uses the awesome [python-holidays library](https://pypi.org/project/holidays/)
 
-# The Prooblem
+# The Problem
 I want to fire some alerts on workdays only, but Prometheus/Alertmanager doesnt support it!
 [You are not alone](https://github.com/prometheus/alertmanager/issues/876)
 
