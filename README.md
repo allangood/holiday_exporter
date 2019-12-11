@@ -4,15 +4,55 @@ This exporter uses the awesome [python-holidays library](https://pypi.org/projec
 
 # The Problem
 I want to fire some alerts on workdays only, but Prometheus/Alertmanager doesnt support it!
+
 [You are not alone](https://github.com/prometheus/alertmanager/issues/876)
 
 # Solution #1
 Create a recording rule on Prometheus with all holidays.
 This can be really complicated with non fixed holidays, like Easter.
+
 [Implementation sugestion](https://gist.github.com/roidelapluie/8c67e9c8fb18b310a4a90cb92a23056b)
 
 # Solution #2
 Use this exporter and include it in your expression!
+
+Here is a quick how to use this exporter:
+
+Create an alert rule in Prometheus:
+```
+- alert: Is_Holiday
+  expr: is_holiday > 0
+  labels:
+    severity: warning
+```
+
+And create an inhibit_rules in Alertmanager:
+```
+- source_match:
+    alertname: Is_Holiday
+  target_match:
+    severity: warning
+  equal:
+  - severity
+```
+
+With this configuration, any alert with a label "seceruty = warning" will be inhibited by the holiday exporter.
+You can go beyond and put some work hours as well:
+```
+- alert: Is_Work_Hours
+  expr:
+    is_holiday > 0
+    or
+    hour() - (scalar(is_daylight_saving_time) + 6) < 8
+    or
+    day_of_week() == 0
+    or
+    day_of_week() == 6
+  labels:
+    severity: warning
+```
+In this rule, my timezone is -6 and it will be triggered if is a holiday, or current hour is > 17 and < 8, or day of week is Saturday or Sunday.
+When this alert fires it will inhibit any rule with a label "severity = warning".
 
 # How to run:
 ```
