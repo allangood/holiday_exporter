@@ -1,9 +1,19 @@
 ---
 main:
- port: 9110
+ port: 9137
 
 holidays:
   - country: "CA"
     province: "ON"
   - country: "US"
     state: "CA"
+
+custom_holidays:
+  # Dates must be in ISO format: YYYY-MM-DD
+  # Use temaplte {YYYY} for year and {MM} for month
+  - date: "{YYYY}-01-01"
+    description: "Some event that happens every year"
+  - date: "{YYYY}-{MM}-01"
+    description: "Some event that repeats every month at specific day"
+  - date: "2019-12-17"
+    description: "Some day this year only"

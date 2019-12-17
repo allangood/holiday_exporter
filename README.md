@@ -60,13 +60,13 @@ git clone https://github.com/allangood/holiday_exporter.git
 cd holiday_exporter
 vi includes/holiday_exporter.yaml
 docker build -t holiday_exporter .
-docker run -d -p 9110:9110 --name holiday holiday_exporter
+docker run -d -p 9137:9137 --name holiday holiday_exporter
 ```
 Or you can specify your own configuration file:
 Create your YAML file:
 ```
 main:
- port: 9110
+ port: 9137
 
 # Countries, states and provinces accordingly to https://pypi.org/project/holidays
 holidays:
@@ -75,9 +75,23 @@ holidays:
   - country: "US"
     state: "CA"
 ```
-Then use with your container:
+Run the holiday_exporter container:
 ```
-docker run -d -p 9110:9110 -v my_config_file.yaml:/etc/holiday_exporter.yaml --restart unless-stopped --name holiday_exporter holiday_exporter
+docker run -d -p 9137:9137 -v my_config_file.yaml:/etc/holiday_exporter.yaml --restart unless-stopped --name holiday_exporter allangood/holiday_exporter
+```
+
+Version 1.1 and later of this exporter supports custom holidays.
+You just have to add a section like this to your configuration file:
+```
+custom_holidays:
+  # Dates must be in ISO format: YYYY-MM-DD
+  # Use temaplte {YYYY} for year and {MM} for month
+  - date: "{YYYY}-01-01"
+    description: "Some event that happens every year"
+  - date: "{YYYY}-{MM}-01"
+    description: "Some event that repeats every month at specific day"
+  - date: "2019-12-17"
+    description: "Some day this year only"
 ```
 
 Then configure Prometheus to scrape your server:
@@ -88,7 +102,7 @@ Then configure Prometheus to scrape your server:
   metrics_path: "/"
   static_configs:
   - targets:
-    - <your_server_address>:9110
+    - <your_server_address>:9137
 ```
 
 Metrics exposed:
@@ -104,6 +118,7 @@ Metrics exposed:
 # TYPE is_holiday gauge
 is_holiday{country="CA",province="ON",state="None"} 0.0
 is_holiday{country="US",province="None",state="CA"} 0.0
+is_holiday{country="Custom",province="Custom",state="Custom"} 1.0
 # HELP is_daylightsavings Boolean value if today is local daylight saving time
 # TYPE is_daylightsavings gauge
 is_daylight_savings 0.0
