@@ -36,7 +36,7 @@ And create an inhibit_rules in Alertmanager:
   - severity
 ```
 
-With this configuration, any alert with a label "seceruty = warning" will be inhibited by the holiday exporter.
+With this configuration, any alert with a label "severity = warning" will be inhibited by the holiday exporter.
 You can go beyond and put some work hours as well:
 ```
 - alert: Is_Work_Hours
@@ -52,7 +52,7 @@ You can go beyond and put some work hours as well:
     severity: warning
 ```
 In this rule, my timezone is -6 and it will be triggered if is a holiday, or current hour is > 17 and < 8, or day of week is Saturday or Sunday.
-When this alert fires it will inhibit any rule with a label "severity = warning".
+When this alert fires, it will inhibit any rule with a label "severity = warning".
 
 # How to run:
 ```
