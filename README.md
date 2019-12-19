@@ -43,7 +43,9 @@ You can go beyond and put some work hours as well:
   expr:
     is_holiday > 0
     or
-    hour() - (scalar(is_daylight_saving_time) + 6) < 8
+    hour() < 8 + (6 - scalar(is_daylight_saving_time))
+    or
+    hour() > 17 + (6 - scalar(is_daylight_saving_time))
     or
     day_of_week() == 0
     or
@@ -51,7 +53,7 @@ You can go beyond and put some work hours as well:
   labels:
     severity: warning
 ```
-In this rule, my timezone is -6 and it will be triggered if is a holiday, or current hour is > 17 and < 8, or day of week is Saturday or Sunday.
+In this rule, my timezone is -6h and it will be triggered if is a holiday, or current hour is > 17 and < 8, or day of week is Saturday or Sunday.
 When this alert fires, it will inhibit any rule with a label "severity = warning".
 
 # How to run:
