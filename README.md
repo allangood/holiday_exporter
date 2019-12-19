@@ -47,9 +47,9 @@ You can go beyond and put some work hours as well:
     or
     hour() > 17 + (6 - scalar(is_daylight_saving_time))
     or
-    day_of_week() == 0
+    day_of_week(vector(time() + (3600 * (6 - scalar(is_daylight_saving_time))))) == 0
     or
-    day_of_week() == 6
+    day_of_week(vector(time() + (3600 * (6 - scalar(is_daylight_saving_time))))) == 6
   labels:
     severity: warning
 ```
