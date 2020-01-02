@@ -1,4 +1,9 @@
-# holiday_exporter
+# Holiday Exporter
+![Version](https://img.shields.io/github/v/tag/allangood/holiday_exporter?label=version&sort=semver&style=flat-square)
+![License](https://img.shields.io/github/license/allangood/holiday_exporter?style=flat-square)
+![Docker Downloads](https://img.shields.io/docker/pulls/allangood/holiday_exporter?logo=docker&style=flat-square)
+![Docker Build Status](https://img.shields.io/docker/cloud/build/allangood/holiday_exporter?logo=docker&style=flat-square)
+
 A simple python exporter that exports holidays to Prometheus to help with Alerting.
 This exporter uses the awesome [python-holidays library](https://pypi.org/project/holidays/)
 
