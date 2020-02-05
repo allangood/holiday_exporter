@@ -51,7 +51,7 @@ if __name__ == '__main__':
         if 'custom_holidays' in config:
             is_holiday = 0
             for custom_holiday in config['custom_holidays']:
-                isodate = custom_holiday['date'].upper().format(YYYY=now.year, MM=now.month)
+                isodate = custom_holiday['date'].upper().format(YYYY=now.year, MM='%02d'%now.month)
                 if date.fromisoformat(isodate) == date.today():
                     is_holiday = 1
                     break
