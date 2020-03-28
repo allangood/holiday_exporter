@@ -84,7 +84,7 @@ holidays:
 ```
 Run the holiday_exporter container:
 ```
-docker run -d -p 9137:9137 -v my_config_file.yaml:/etc/holiday_exporter.yaml --restart unless-stopped --name holiday_exporter allangood/holiday_exporter
+docker run -d -p 9137:9137 -v /etc/localtime:/etc/localtime:ro -v my_config_file.yaml:/etc/holiday_exporter.yaml --restart unless-stopped --name holiday_exporter allangood/holiday_exporter
 ```
 
 Version 1.1 and later of this exporter supports custom holidays.
