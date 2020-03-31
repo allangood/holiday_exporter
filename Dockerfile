@@ -1,7 +1,8 @@
 FROM python:3.8.1-alpine3.11
 
 COPY includes/requirements.txt /
-RUN pip install -r /requirements.txt \
+RUN apk add --no-cache tzdata \
+    && pip install -r /requirements.txt \
     && addgroup -g 1000 holiday \
     && adduser -D -u 1000 -G holiday holiday \ 
     && rm requirements.txt
